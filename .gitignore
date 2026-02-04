@@ -1,3 +1,26 @@
+# Python のキャッシュ
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.pyd
+*.pdb
+
+# 仮想環境は絶対にGitに入れない
+python_env/
+# もし追加で仮想環境作ったとき用に
+venv/ 
+.venv/
+
+# 環境変数ファイル/APIキー、パスワード、秘密鍵などを入れるファイル
 .env
+
+# Django
+*.sqlite3
+# ローカルDBは個人ごとに違うのでGitに入れない
+
+# 誤commit防止
+.vscode/
+
+*.log
+# ログには機密情報が含まれることがある
