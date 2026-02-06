@@ -66,13 +66,13 @@ class Command(BaseCommand):
         """CSVを読み込み、Placeモデルにデータを取り込むメイン処理"""
         hinanjo_path = Path(options["hinanjo"])
         hinanbasyo_path = Path(options["hinanbasyo"])
-        kitakukonnansya_path = Path(options["kitakukonnansya"])
+        kitakukonnan_path = Path(options["kitakukonnan"])
         truncate = options["truncate"] 
 
         if truncate:
             # --truncate
             Place.objects.all().delete()
-            self.stdout.write(self.style.WARNING("ALL Place recprds deleted (--truncate)."))
+            self.stdout.write(self.style.WARNING("ALL Place records deleted (--truncate)."))
 
             # 取り込み時刻を記録(全レコード共通)
             synced_at = timezone.now()
@@ -80,7 +80,7 @@ class Command(BaseCommand):
             # 3種類のCSVを順番に取り込む
             self.import_hinanjo(hinanjo_path, synced_at)
             self.import_hinanbasyo(hinanbasyo_path, synced_at)
-            self.import_kitakukonnansya(kitakukonnansya_path, synced_at)
+            self.import_kitakukonnan(kitakukonnan_path, synced_at)
 
             # 最終的な件数を表示
             total = Place.objects.count()
