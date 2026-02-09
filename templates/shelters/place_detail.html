@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {# スマホ表示に対応するための設定 #}
+    <title>{{ place.name }}</title>
+    {# ページタイトルに施設名を表示 #}
+</head>
+<body>
+    <p><a href="/places/">←一覧に戻る</a></p> {# 一覧ページへの戻りリンク #}
+
+    <h1>{{ place.name }}</h1> {# 施設名を大見出しとして表示 #}
+    <p>カテゴリ：{{place.category}}</p> {# 施設カテゴリを表示 #}
+
+    {% if place.subtype %} {# subtypeが存在するときのみ表示 #}
+        <p>種別：{{ place.subtype }}</p> {# 施設の種別を表示 #}
+    {% endif %}
+
+    <p>住所：{{ place.address }}</p> {# 施設住所を表示 #}
+
+    {% if place.lat and place.lng %} {# 緯度経度が両方ある場合のみ表示 #}
+        <p>緯度経度：{{ place.lat }}, {{ place.lng }}</p> {# 緯度経度を表示 #}
+    {% endif %}
+
+    {% if place.capacity %} {# 収容人数が設定されている場合のみ表示 #}
+        <p>想定収容人数：{{ place.capacity }}</p> {# 収容人数を表示 #}
+    {% endif %}
+
+    {% if place.url %} {# URLがある場合のみ表示 #}
+        <p>URL:
+            <a href="{{ place.url }}" target="_blank" rel="noreferrer">
+                {{ place.url }}
+            </a> {# 外部リンクとして施設URLを表示 #}
+        </p>
+    {% endif %}
+
+    {% if place.disaster_flags %} {# 対応災害フラグがある場合のみ表示 #}
+        <h2>対応災害</h2> {# 災害対応の見出し #}
+        <ul>
+            {% for k, v in place.disaster_flags.items %} {# 辞書をキー・値でループ #}
+                {% if v %} {# 値がTrueの項目だけ表示 #}
+                    <li>{{ k }}:{{ v }}</li> {# 災害名と値(True)を表示 #}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if place.notes %} {# 備考がある場合のみ表示 #}
+        <h2>備考</h2> {# 備考の見出し #}
+        <pre style="white-space: pre-wrap;">{{ place.notes }}</pre> {# 改行を保持して表示 #}
+    {% endif %}
+</body>
+</html>
