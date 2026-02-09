@@ -17,7 +17,7 @@ def place_list(request):
     q = request.GET.get("q", "").strip()
 
     # Placeモデルの全データを取得(ここから絞り込みを行う)
-    place = Place.objects.all()
+    places = Place.objects.all()
 
     if category:
         # categoryが指定されていれば、そのカテゴリで絞り込み
