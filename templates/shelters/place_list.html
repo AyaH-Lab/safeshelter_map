@@ -49,6 +49,10 @@
     <p>表示件数：{{ places | length }}件</p>
     {# 検索結果の件数を表示 #}
 
+    {% if places %}
+        <p>最終同期日時：{{ places.0.synced_at | date:"Y-m-d H:i" }}</p>
+    {% endif %}
+
     <ul>
         {% for p in places %}
         {# places(ビューから渡された施設リスト)をループ #}
@@ -65,5 +69,16 @@
     {% endfor %}
     {# ループ終了 #}
     </ul>
+
+    <hr>
+<footer>
+  <small>
+    このアプリは船橋市のオープンデータを改変して利用しています。<br>
+    出典：船橋市「（避難場所一覧・避難所（一時滞在可能）・帰宅困難者支援施設）」、
+    <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank" rel="noreferrer">
+      クリエイティブ・コモンズ・ライセンス表示 4.0
+    </a>
+  </small>
+</footer>
 </body>
 </html>

@@ -18,6 +18,7 @@
     {% endif %}
 
     <p>住所：{{ place.address }}</p> {# 施設住所を表示 #}
+    <p>最終同期日時：{{ place.synced_at|date:"Y-m-d H:i" }}</p>
 
     {% if place.lat and place.lng %} {# 緯度経度が両方ある場合のみ表示 #}
         <p>緯度経度：{{ place.lat }}, {{ place.lng }}</p> {# 緯度経度を表示 #}
