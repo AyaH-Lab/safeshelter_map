@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {# スマホ表示に対応するための設定 #}
+    <title>避難施設一覧</title>
+</head>
+<body>
+    <h1>避難施設一覧</h1>
+    <form method="get" action="/places/">
+        {# GETメソッドで/places/に検索ホームを送信 #}
+        <label>
+            カテゴリ：
+            <select name="category">
+                {# カテゴリ選択用のセレクトボックス。name="categry"がURLパラメータになる #}
+                <option value="">すべて</option>
+                {# カテゴリ未選択(全権表示)の選択肢 #}
+                {% for c in categories %}
+                {# Djangoテンプレート：categories(ビューから渡されたリスト)をループ #}
+                    <option value="{{ c }}" {% if c == selected_category %}
+                    selected
+                    {% endif %}>
+                    {# 現在選択中のカテゴリならselectedを付与 #}
+                    {{ c }}
+                    {# カテゴリ名を表示 #}
+                    </option>
+                {% endfor %}
+                {# ループ終了 #}
+            </select>
+        </label>
+
+        <label>
+            キーワード：
+            <input type="text" name="q" value="{{q}}" placeholder="施設名または住所"/>
+            {# キーワード検索用のテキストボックス。valueに現在の検索語を保持 #}
+        </label>
+
+        <button type="submit">検索</button>
+        {# 検索ボタン #}
+
+        <a href="/places/">条件クリア</a>
+        {# 検索条件をリセットして一覧に戻るリンク #}
+    </form>
+
+    <p>※検索は補助です。0件のときはカテゴリを「すべて」に戻して一覧から探せます。</p>
+    {# ユーザー向けの注意書き #}
+
+    <p>表示件数：{{ places | length }}件</p>
+    {# 検索結果の件数を表示 #}
+
+    <ul>
+        {% for p in places %}
+        {# places(ビューから渡された施設リスト)をループ #}
+        <li>
+            <a href="/places/{{ p.id }}/">{{ p.name }}</a><br />
+            {# 施設詳細ページへのリンク(IDをURLに使用) #}
+            {{ p.address }}
+            {# 施設の住所を表示 #}
+        </li>
+
+    {% empty %}
+    {# ループが0件だった場合の表示 #}
+        <li>該当する施設が見つかりませんでした。条件を減らして再検索してください。</li>
+    {% endfor %}
+    {# ループ終了 #}
+    </ul>
+</body>
+</html>
