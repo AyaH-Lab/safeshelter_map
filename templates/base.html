@@ -1,0 +1,52 @@
+{% load static %}
+{# Djangoのstaticタグを使えるようにする #}
+<!doctype html> {# HTML5文書であることを宣言 #}
+<html lang="ja"> {# 文書の言語を日本語に設定 #}
+<head>
+  <meta charset="utf-8" /> {# 文字コードをUTF-8に設定 #}
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  {# スマホ対応 #}
+  <title>{% block title %}避難所検索{% endblock %}</title>
+  {# 子テンプレートでタイトルを上書きできる #}
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {# staticフォルダのCSSを読み込む #}
+
+  {% block extra_head %}{% endblock %}
+  {# 子テンプレートが追加のCSSやmetaタグを挿入できる領域 #}
+
+  {# PWAは後でここに追加する #}
+</head>
+
+<body>
+  <header class="site-header"> {# ページ上部のヘッダー #}
+    <div class="container"> {# レイアウト用のコンテナ #}
+      <a class="brand" href="{% url 'places:place_list' %}">避難所検索</a>
+      {# ロゴ(サイト名)。クリックで一覧ページへ移動 #}
+
+      {% block header_right %}{% endblock %}
+      {# ヘッダー右側に子テンプレートが内容を追加できる #}
+    </div>
+  </header>
+
+  <main class="container"> {# メインコンテンツ領域 #}
+    {% block content %}{% endblock %}
+    {# 子テンプレートがページの中身を挿入する場所 #}
+  </main>
+
+  <footer class="site-footer"> {# ページ下部のフッター #}
+    <div class="container">
+
+      {% block footer %}
+      <small>
+        データ出典: 国土地理院 / 地方自治体オープンデータ等（CC BY 4.0）
+      </small>
+      {% endblock %}
+      {# フッター内容。必要なら子テンプレートで上書き可能 #}
+    </div>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+  {# 子テンプレートが追加のJavaScriptを読み込める領域 #}
+</body>
+</html>
