@@ -6,6 +6,7 @@
     <p><a href="/places/">←一覧に戻る</a></p> {# 一覧ページへの戻りリンク #}
 
     <h1>{{ place.name }}</h1> {# 施設名を大見出しとして表示 #}
+    <a href="{{ place.map_url }}" target="_blank" rel="noopener">地図で開く</a>
     <p>カテゴリ：{{place.category}}</p> {# 施設カテゴリを表示 #}
 
     {% if place.subtype %} {# subtypeが存在するときのみ表示 #}

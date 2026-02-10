@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils.http import urlencode
 # Create your models here.
 
 # 避難施設(避難所・避難場所・帰宅困難者支援施設など)を表すモデル
@@ -27,7 +27,7 @@ class Place(models.Model):
 
 
     # 施設の住所(検索・表示用)
-    address = models.CharField(max_length=512)
+    address = models.CharField(max_length=255, blank=True, default="")
 
     # 緯度(地図表示や距離計算の将来拡張用)
     lat = models.FloatField(blank=True, null=True)
@@ -50,6 +50,18 @@ class Place(models.Model):
 
     # データを端末に同期した日時(オフライン利用時の基準)
     synced_at = models.DateTimeField()
+
+    @property
+    def map_url(self) -> str:
+        # 座標があれば座標優先
+        if self.lat is not None and self.lng is not None:
+            return f"https://www.google.com/maps?q={self.lat},{self.lng}"
+        # 住所があれば検索
+        q = self.address.strip()
+        if q:
+            return "https://www.google.com/maps/search/?" + urlencode({"api": 1, "query": q})
+        # 最後の保険: 名称で検索
+        return "https://www.google.com/maps/search/?" + urlencode({"api": 1, "query": getattr(self, "name", "")})
 
     # モデル全体の設定
     class Meta:

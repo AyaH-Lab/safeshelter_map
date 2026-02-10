@@ -57,6 +57,8 @@
             {# 施設詳細ページへのリンク(IDをURLに使用) #}
             {{ p.address }}
             {# 施設の住所を表示 #}
+            <a href="{{ p.map_url }}" target="_blank" rel="noopener">地図で開く</a>
+            {# 地図のリンクを追加 #}
         </li>
 
     {% empty %}
