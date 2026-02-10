@@ -12,5 +12,5 @@ urlpatterns = [
 
     # /places/にアクセスしたらviews.place_detailを実行
     # <int:pk>はURLの数字部分をpkとしてレビューに渡す
-    path("<int:pk>/", views.place_detail, name="place_detail"),
+    path("place/<int:pk>/", views.place_detail, name="place_detail"),
 ]

@@ -43,14 +43,14 @@ def place_list(request):
     }
 
     # place_list.htmlにデータを渡して描画
-    return render(request, "shelters/place_list.html", context)
+    return render(request, "places/place_list.html", context)
 
-def place_detail(reqest, pk):
+def place_detail(request, pk):
     """詳細ページのビュー関数。1件のPlaceを表示する"""
 
     # pk(主キー)に一致するPlaceを取得。なければ404を返す。
-    Place = get_object_or_404(Place, pk=pk)
+    place = get_object_or_404(Place, pk=pk)
 
     # place_detail.htmlにplaceを渡して描画
-    return render(reqest, "shelters/place_detail.html",{"place":Place})
+    return render(request, "places/place_detail.html",{"place":place})
 

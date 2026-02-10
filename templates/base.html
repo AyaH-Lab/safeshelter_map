@@ -15,7 +15,9 @@
   {% block extra_head %}{% endblock %}
   {# 子テンプレートが追加のCSSやmetaタグを挿入できる領域 #}
 
-  {# PWAは後でここに追加する #}
+  {# PWA #}
+<link rel="manifest" href="{% static 'manifest.json' %}">
+<meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
@@ -48,5 +50,10 @@
 
   {% block extra_js %}{% endblock %}
   {# 子テンプレートが追加のJavaScriptを読み込める領域 #}
+  <script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("{% static 'sw.js' %}");
+  }
+  </script>
 </body>
 </html>
