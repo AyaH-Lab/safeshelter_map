@@ -20,5 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     # ルートURLにアクセスしたら、sherterアプリのURL設定に処理を渡す。
-    path("", include("shelters.urls")),
+    path("", include(("shelters.urls", "places"), namespace="places")),
 ]

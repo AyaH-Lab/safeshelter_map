@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
 
-# URLの名前空間を設定。テンプレートで'shelters:  'みたいに使えるようになる
-app_name = "shelters"
+# URLの名前空間を設定。テンプレートで'places:  'みたいに使えるようになる
+app_name = "places"
 
 # URLパターンをまとめたリスト(Djangoがここを読み取る)
 urlpatterns = [
@@ -12,5 +12,5 @@ urlpatterns = [
 
     # /places/にアクセスしたらviews.place_detailを実行
     # <int:pk>はURLの数字部分をpkとしてレビューに渡す
-    path("places/<int:pk>", views.place_detail, name="place_detail"),
+    path("<int:pk>/", views.place_detail, name="place_detail"),
 ]
