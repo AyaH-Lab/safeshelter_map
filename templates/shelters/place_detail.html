@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    {# スマホ表示に対応するための設定 #}
-    <title>{{ place.name }}</title>
-    {# ページタイトルに施設名を表示 #}
-</head>
+{% extends "base.html" %}
+{% block title %}一覧{% endblock %}
+
+{% block content %}
 <body>
     <p><a href="/places/">←一覧に戻る</a></p> {# 一覧ページへの戻りリンク #}
 
@@ -52,4 +47,4 @@
         <pre style="white-space: pre-wrap;">{{ place.notes }}</pre> {# 改行を保持して表示 #}
     {% endif %}
 </body>
-</html>
+{% endblock %}
