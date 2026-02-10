@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    {# スマホ表示に対応するための設定 #}
-    <title>避難施設一覧</title>
-</head>
+{% extends "base.html" %}
+{% block title %}一覧{% endblock %}
+
+{% block content %}
 <body>
     <h1>避難施設一覧</h1>
     <form method="get" action="/places/">
@@ -81,4 +77,4 @@
   </small>
 </footer>
 </body>
-</html>
+{% endblock %}
