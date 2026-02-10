@@ -53,16 +53,23 @@ class Place(models.Model):
 
     @property
     def map_url(self) -> str:
-        # 座標があれば座標優先
+         # プロパティとして呼び出せる
         if self.lat is not None and self.lng is not None:
+            # 緯度・経度が両方あり、座標が正確に存在する場合
             return f"https://www.google.com/maps?q={self.lat},{self.lng}"
-        # 住所があれば検索
-        q = self.address.strip()
-        if q:
-            return "https://www.google.com/maps/search/?" + urlencode({"api": 1, "query": q})
-        # 最後の保険: 名称で検索
-        return "https://www.google.com/maps/search/?" + urlencode({"api": 1, "query": getattr(self, "name", "")})
+            # GoogleMapsの座標検索URLを返す。ピンが表示される。
 
+        # 住所だけだと曖昧な時があるので、名称も一緒に検索語に含める
+        q = " ".join([s for s in [getattr(self, "name", ""), getattr(self, "address", "")] if s]).strip()
+        # nameとaddressのうち、存在する者だけをスペース区切りで結合して検索語を作成
+        if q:
+        # 検索語が空でなければ。名称か住所のどちらかが存在する。
+            return "https://www.google.com/maps?" + urlencode({"q": q})
+            # GoogleMapsの検索URLを返す。ピンは表示されないが、検索結果として場所が表示される。
+
+        return ""
+        # リンクを表示しないための安全策
+    
     # モデル全体の設定
     class Meta:
         indexes = [
