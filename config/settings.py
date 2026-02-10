@@ -23,9 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cl!7@ptvymg950tl+w4db*ebanp7o7bmc*jgafj$j83n2^cbgo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "ayakaya.pythonanywhere.com",
+]
 
 
 # Application definition
@@ -120,4 +122,10 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
+]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://ayakaya.pythonanywhere.com",
 ]
