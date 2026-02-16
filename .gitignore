@@ -19,6 +19,9 @@ venv/
 *.sqlite3
 # ローカルDBは個人ごとに違うのでGitに入れない
 
+# Django collectstatic出力（生成物なのでGit管理しない）
+staticfiles/
+
 # 誤commit防止
 .vscode/
 
