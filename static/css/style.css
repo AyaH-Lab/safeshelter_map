@@ -1,3 +1,17 @@
+/* 基本レイアウト */
+.container {
+    padding: 0 12px;
+    box-sizing: border-box;
+}
+
+/* PCでは中央寄せして幅を制限 */
+@media(min-width:900px){
+    .container{
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
 /* カードリスト全体 */
 .place-list {
     list-style: none;
@@ -15,16 +29,39 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* 上段：施設名 + バッジ */
+/* スマホでは少し余白を増やして読みやすく */
+@media(max-width:600px){
+    .place-card{
+        padding: 14px;
+    }
+}
+
+/* カード上段：施設名 + バッジ */
 .place-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* スマホでは縦並びにして窮屈さを解消 */
+@media(max-width:600px){
+    .place-card-header{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
+
 .place-name {
     font-size: 1.1rem;
     font-weight: bold;
+}
+
+/* スマホでは少し小さく */
+@media(max-width:600px){
+    .place-name{
+        font-size: 1rem;
+    }
 }
 
 /* 共通バッジ */
@@ -38,10 +75,10 @@
 }
 
 /* カテゴリ別 */
-.badge--shelter{ background: #4aae4e; }
-.badge--site{ background: #d6ed08; }
-.badge--support{ background: #7d4ece; }
-.badge--other{ background: #607d8b; }
+.badge--shelter{ background: #4caf50; }
+.badge--site{ background: #689f38; }
+.badge--support{ background: #5c6bc0; }
+.badge--other{ background: #78909c; }
 
 /* 住所 */
 .place-address {
@@ -65,26 +102,75 @@
     font-size: 0.85rem;
     text-decoration: none;
     color: #fff;
+    margin-bottom: 0;
 }
 
 .btn-detail {
-    display: block;
-    background: #1976d2; /* 青 */
-    color: #fff;
-    padding: 12px;
-    text-align: center;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    margin-bottom: 16px;
+    background: transparent; /* 詳細ボタン */
+    border: 2px solid #1976d2;
+    color: #1976d2;
 }
 
 .btn-map-large {
-    display: block;
-    background: #ee6745; /* オレンジ */
-    color: #fff;
-    padding: 12px;
+    background: #ee6745; /* 地図ボタン・オレンジ */
+}
+
+/* 検索フォーム（PC） */
+.search-form{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: end;
+  margin: 12px 0 8px;
+}
+
+.search-form label{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.search-form select,
+.search-form input[type="text"]{
+  padding: 10px 12px;
+  font-size: 16px;          /* スマホの自動ズーム対策 */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-form button{
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: #1976d2;
+  color: #fff;
+  font-weight: 700;
+}
+
+/* スマホ：縦並び＋フル幅 */
+@media (max-width: 600px){
+  .search-form{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-form label,
+  .search-form button,
+  .search-form a{
+    width: 100%;
+  }
+
+  .search-form a{
+    display: inline-block;
     text-align: center;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    margin-bottom: 16px;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-decoration: none;
+    box-sizing: border-box;
+  }
 }
