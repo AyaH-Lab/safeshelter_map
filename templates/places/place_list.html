@@ -48,8 +48,16 @@
   {% for p in places %}
   <li class="place-card">
     <div class="place-card-header">
-      <strong class="place-name">{{ p.name }}</strong>
-      <span class="badge">{{ p.category }}</span>
+        <strong class="place-name">{{ p.name }}</strong>
+        <span class="badge
+            {% if p.category == '避難所' %}badge--shelter
+            {% elif p.category == '避難場所' %}badge--site
+            {% elif p.category == '帰宅困難者支援施設' %}badge--support
+            {% else %}badge--other
+            {% endif %}
+            ">
+            {{ p.category }}
+        </span>
     </div>
 
     <p class="place-address">{{ p.address }}</p>

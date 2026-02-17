@@ -27,14 +27,21 @@
     font-weight: bold;
 }
 
-/* カテゴリバッジ */
-.badge {
-    background: #ff9800; /* 防災っぽいオレンジ */
-    color: #fff;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
+/* 共通バッジ */
+.badge{
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
 }
+
+/* カテゴリ別 */
+.badge--shelter{ background: #4aae4e; }
+.badge--site{ background: #d6ed08; }
+.badge--support{ background: #7d4ece; }
+.badge--other{ background: #607d8b; }
 
 /* 住所 */
 .place-address {
@@ -73,7 +80,7 @@
 
 .btn-map-large {
     display: block;
-    background: #4caf50; /* 緑 */
+    background: #ee6745; /* オレンジ */
     color: #fff;
     padding: 12px;
     text-align: center;
