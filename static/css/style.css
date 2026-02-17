@@ -174,3 +174,7 @@
     box-sizing: border-box;
   }
 }
+
+.place-actions{
+  margin: 12px 0 16px;
+}

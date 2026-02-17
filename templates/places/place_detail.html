@@ -2,10 +2,19 @@
 {% block title %}詳細{% endblock %}
 
 {% block content %}
-    <p><a href="/places/">←一覧に戻る</a></p> {# 一覧ページへの戻りリンク #}
-
     <h1>{{ place.name }}</h1> {# 施設名を大見出しとして表示 #}
-    <a href="{{ place.map_url }}" target="_blank" rel="noopener">地図で開く</a>
+    <div class="place-actions">
+        {% if place.map_url %}
+            <a class="btn-map-large" href="{{ place.map_url }}" target="_blank" rel="noopener">
+                地図で開く
+            </a>
+        {% else %}
+            <span class="btn-map-large btn-disabled">
+                地図情報なし
+            </span>
+        {% endif %}
+        <a class="btn-detail" href="/places/">一覧に戻る</a>
+    </div>
     <p>カテゴリ：{{place.category}}</p> {# 施設カテゴリを表示 #}
 
     {% if place.subtype %} {# subtypeが存在するときのみ表示 #}

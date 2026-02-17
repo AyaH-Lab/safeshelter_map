@@ -63,9 +63,15 @@
     <p class="place-address">{{ p.address }}</p>
 
     <div class="place-actions">
-        <a class="btn-map-large" href="{{ p.map_url }}" target="_blank" rel="noopener">
-        地図を開く
-        </a>
+        {% if p.map_url %}
+            <a class="btn-map-large" href="{{ p.map_url }}" target="_blank" rel="noopener">
+                地図を開く
+            </a>
+        {% else %}
+            <span class="btn-map-large btn-disabled">
+                地図情報なし
+            </span>
+        {% endif %}
         <a class="btn-detail" href="/places/{{ p.id }}/">詳細</a>
     </div>
   </li>
