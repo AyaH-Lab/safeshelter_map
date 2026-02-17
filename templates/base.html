@@ -23,7 +23,7 @@
 <body>
   <header class="site-header"> {# ページ上部のヘッダー #}
     <div class="container"> {# レイアウト用のコンテナ #}
-      <a class="brand" href="{% url 'places:place_list' %}">避難所検索</a>
+      <a class="brand" href="{% url 'places:place_list' %}">トップへ</a>
       {# ロゴ(サイト名)。クリックで一覧ページへ移動 #}
 
       {% block header_right %}{% endblock %}
@@ -40,9 +40,16 @@
     <div class="container">
 
       {% block footer %}
-      <small>
-        データ出典: 国土地理院 / 地方自治体オープンデータ等（CC BY 4.0）
-      </small>
+  <small>
+    {% if places %}
+    <p>最終同期日時：{{ places.0.synced_at | date:"Y-m-d H:i" }}</p>
+    {% endif %}
+    このアプリは船橋市のオープンデータを改変して利用しています。<br>
+    出典：船橋市「（避難場所一覧・避難所（一時滞在可能）・帰宅困難者支援施設）」、
+    <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank" rel="noreferrer">
+      クリエイティブ・コモンズ・ライセンス表示 4.0
+    </a>
+  </small>
       {% endblock %}
       {# フッター内容。必要なら子テンプレートで上書き可能 #}
     </div>

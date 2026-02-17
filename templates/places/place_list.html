@@ -2,7 +2,6 @@
 {% block title %}一覧{% endblock %}
 
 {% block content %}
-<body>
     <h1>避難施設一覧</h1>
     <form method="get" action="/places/">
         {# GETメソッドで/places/に検索ホームを送信 #}
@@ -45,38 +44,26 @@
     <p>表示件数：{{ places | length }}件</p>
     {# 検索結果の件数を表示 #}
 
-    {% if places %}
-        <p>最終同期日時：{{ places.0.synced_at | date:"Y-m-d H:i" }}</p>
-    {% endif %}
+<ul class="place-list">
+  {% for p in places %}
+  <li class="place-card">
+    <div class="place-card-header">
+      <strong class="place-name">{{ p.name }}</strong>
+      <span class="badge">{{ p.category }}</span>
+    </div>
 
-    <ul>
-        {% for p in places %}
-        {# places(ビューから渡された施設リスト)をループ #}
-        <li>
-            <a href="/places/{{ p.id }}/">{{ p.name }}</a><br />
-            {# 施設詳細ページへのリンク(IDをURLに使用) #}
-            {{ p.address }}
-            {# 施設の住所を表示 #}
-            <a href="{{ p.map_url }}" target="_blank" rel="noopener">地図で開く</a>
-            {# 地図のリンクを追加 #}
-        </li>
+    <p class="place-address">{{ p.address }}</p>
 
-    {% empty %}
-    {# ループが0件だった場合の表示 #}
-        <li>該当する施設が見つかりませんでした。条件を減らして再検索してください。</li>
-    {% endfor %}
-    {# ループ終了 #}
-    </ul>
+    <div class="place-actions">
+        <a class="btn-map-large" href="{{ p.map_url }}" target="_blank" rel="noopener">
+        地図を開く
+        </a>
+        <a class="btn-detail" href="/places/{{ p.id }}/">詳細</a>
+    </div>
+  </li>
+  {% empty %}
+  <li>該当する施設が見つかりませんでした。条件を減らして再検索してください。</li>
+  {% endfor %}
+</ul>
 
-    <hr>
-<footer>
-  <small>
-    このアプリは船橋市のオープンデータを改変して利用しています。<br>
-    出典：船橋市「（避難場所一覧・避難所（一時滞在可能）・帰宅困難者支援施設）」、
-    <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank" rel="noreferrer">
-      クリエイティブ・コモンズ・ライセンス表示 4.0
-    </a>
-  </small>
-</footer>
-</body>
 {% endblock %}

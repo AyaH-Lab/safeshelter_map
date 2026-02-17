@@ -1,8 +1,7 @@
 {% extends "base.html" %}
-{% block title %}一覧{% endblock %}
+{% block title %}詳細{% endblock %}
 
 {% block content %}
-<body>
     <p><a href="/places/">←一覧に戻る</a></p> {# 一覧ページへの戻りリンク #}
 
     <h1>{{ place.name }}</h1> {# 施設名を大見出しとして表示 #}
@@ -47,5 +46,4 @@
         <h2>備考</h2> {# 備考の見出し #}
         <pre style="white-space: pre-wrap;">{{ place.notes }}</pre> {# 改行を保持して表示 #}
     {% endif %}
-</body>
 {% endblock %}
