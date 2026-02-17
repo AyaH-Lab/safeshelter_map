@@ -72,7 +72,7 @@
                 地図情報なし
             </span>
         {% endif %}
-        <a class="btn-detail" href="/places/{{ p.id }}/">詳細</a>
+        <a class="btn-detail" href="{% url 'places:place_detail' p.id %}">詳細</a>
     </div>
   </li>
   {% empty %}
