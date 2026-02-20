@@ -1,6 +1,29 @@
 // sw.js（完成版：ステップ1 / 安全なキャッシュ更新対応）
-const CACHE_NAME = "hinan-v3"; // 変更したら v3, v4... と上げる
+const CACHE_NAME = "hinan-v6"; // 変更したら v3, v4... と上げる
 const PRECACHE_URLS = ["/places/"];
+
+function isPlaces(url) {
+  return url.pathname === "/places/";
+}
+
+function isCategoryOnly(url) {
+  if (!isPlaces(url)) return false;
+  const sp = url.searchParams;
+
+  const category = sp.get("category");
+  const q = sp.get("q"); // 空文字もあり得る
+
+  // category は必須
+  if (!category) return false;
+
+  // q が「存在しても空」ならOK。何か入ってたらNG
+  if (q && q.trim() !== "") return false;
+
+  // それ以外の余計なパラメータがあったらNG（必要なら増やせる）
+  const allowedKeys = new Set(["category", "q"]);
+  const onlyAllowed = [...sp.keys()].every((k) => allowedKeys.has(k));
+  return onlyAllowed;
+}
 
 // インストール時：最低限の入口だけキャッシュ
 self.addEventListener("install", (event) => {
@@ -35,25 +58,38 @@ self.addEventListener("fetch", (event) => {
   // ページ遷移（HTML）はネット優先
   if (req.mode === "navigate") {
     event.respondWith(
-      fetch(req)
-        .then((res) => {
-          // オンライン時：開いたページをキャッシュ（将来の閲覧用）
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy));
-          return res;
-        })
-        .catch(async () => {
-          // ステップ1方針：
-          // オフライン時は必ず「クエリなしの一覧」へ戻す（ignoreSearchは使わない）
-          const cached = await caches.match("/places/");
-          if (cached) return cached;
+      (async () => {
+        try {
+          const res = await fetch(req);
 
-          // もしキャッシュが無い場合の最終保険
+          // キャッシュ方針：
+          // - /places/ はキャッシュする
+          // - /places/?category=...（カテゴリだけ）もキャッシュする（オフラインでカテゴリ検索できるように）
+          // - それ以外のクエリ付き（キーワード等）はキャッシュしない（貼り付き防止）
+          if (isPlaces(url) && (!url.search || isCategoryOnly(url))) {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.put(url.pathname + url.search, res.clone());
+          }
+
+          return res;
+        } catch (e) {
+          const cache = await caches.open(CACHE_NAME);
+          // オフライン時：
+          // - リクエストがカテゴリだけなら、そのURLのキャッシュを返す
+          // - それ以外は /places/（クエリなし）へ戻す
+          if (isCategoryOnly(url)) {
+            const cachedCategory = await cache.match(url.pathname + url.search);
+            if (cachedCategory) return cachedCategory;
+          }
+          const cachedPlaces = await cache.match("/places/");
+          if (cachedPlaces) return cachedPlaces;
+
           return new Response("オフラインです。一度オンラインで /places/ を開いてください。", {
             status: 503,
             headers: { "Content-Type": "text/plain; charset=utf-8" },
           });
-        })
+        }
+      })()
     );
     return;
   }
