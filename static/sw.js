@@ -1,5 +1,5 @@
 // sw.js（完成版：ステップ1 / 安全なキャッシュ更新対応）
-const CACHE_NAME = "hinan-v2"; // 変更したら v3, v4... と上げる
+const CACHE_NAME = "hinan-v3"; // 変更したら v3, v4... と上げる
 const PRECACHE_URLS = ["/places/"];
 
 // インストール時：最低限の入口だけキャッシュ
@@ -44,8 +44,8 @@ self.addEventListener("fetch", (event) => {
         })
         .catch(async () => {
           // ステップ1方針：
-          // オフライン時は検索・絞り込み結果を保証しない → 常に一覧へ戻す
-          const cached = await caches.match("/places/", { ignoreSearch: true });
+          // オフライン時は必ず「クエリなしの一覧」へ戻す（ignoreSearchは使わない）
+          const cached = await caches.match("/places/");
           if (cached) return cached;
 
           // もしキャッシュが無い場合の最終保険
