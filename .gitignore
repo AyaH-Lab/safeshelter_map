@@ -25,6 +25,9 @@ staticfiles/
 # 誤commit防止
 .vscode/
 
+# macOS用(Macが勝手に作る隠しファイル、フォルダ設定ファイルのこと)
+.DS_Store
+
 *.log
 # ログには機密情報が含まれることがある
 

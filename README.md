@@ -8,7 +8,7 @@
 
 ---
 
-## デモ
+## Demo
 
 https://ayakaya.pythonanywhere.com/places/
 
@@ -100,6 +100,27 @@ Service Workerのキャッシュ戦略は以下の方針で設計しています
 - Service Worker(Cache API)
 - PWA(manifest.json)
 - PythonAnywhere(本番環境)
+
+---
+
+## Setup (Local Development)
+
+```bash
+git clone https://github.com/AyaH-Lab/safeshelter_map.git
+cd safeshelter_map
+
+python -m venv venv
+venv\Scripts\activate
+
+pip install -r requirements.txt
+python manage.py migrate
+
+python manage.py import_places --truncate
+
+python manage.py runserver
+
+```
+Open: <http://127.0.0.1:8000/places/>
 
 ---
 
